@@ -64,7 +64,7 @@ mini-calendly/
 
 ## 💡 Best Practices & Scalability Design
 
-When I was building this project, I wanted to make sure it wasn't just a simple demo, but structured like a real-world app that can grow over time. Here are the key practices I followed:
+When I was building this project, I wanted to make sure it wasn't just a simple demo, but structured like a real-world app that can grow over time. This architecture is built to be highly scalable, and both the UI design and core feature set can be easily enhanced if required. Here are the key practices I followed:
 
 ### 1. **Layered Controller-Service Architecture (Backend)**
 Instead of putting all database queries and business logic directly inside Express route controllers, I split them into **Controllers** and **Services**:
@@ -141,9 +141,9 @@ Open `http://localhost:5173` in your browser.
 
 ---
 
-## 🔮 Future Improvements
+## 🔮 Future Improvements & Enhancements
 
-Here are a few features I plan to add to make this project even better:
+This application is designed to be scalable, and its design and functionality can be enhanced further as needed. Here are a few planned additions:
 - 📧 **Email Notifications**: Send booking confirmation emails using Nodemailer or Resend.
 - 📅 **Google Calendar Integration**: Sync bookings directly with Google Calendar.
 - 🌍 **Timezone Support**: Automatic timezone conversion for international bookings.
