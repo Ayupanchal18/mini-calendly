@@ -32,6 +32,9 @@ const Register = () => {
 
             if (response.data && response.data.token) {
                 localStorage.setItem('token', response.data.token)
+                if (response.data.user) {
+                    localStorage.setItem('user', JSON.stringify(response.data.user))
+                }
                 window.dispatchEvent(new Event('auth-change'))
                 navigate('/')
             } else {

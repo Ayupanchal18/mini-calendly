@@ -18,6 +18,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
         window.dispatchEvent(new Event('auth-change'))
         navigate('/login')
     }
@@ -25,7 +26,7 @@ const Navbar = () => {
     return (
         <nav className="flex items-center justify-between border-b px-6 py-4 bg-white shadow-sm">
             <Link to="/availability" className="text-xl font-semibold text-gray-800">
-                ScheduleMe
+                Mini Calendly
             </Link>
 
             <div className="flex items-center gap-6">

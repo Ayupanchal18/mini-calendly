@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use("/frontend", authRouter);
 app.use("/frontend/availability", availabilityRouter);
-app.use("/frontend", availabilityRouter); // Also mount at /frontend for direct endpoint access
+app.use("/frontend", availabilityRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

@@ -8,7 +8,7 @@ const Home = () => {
         <div className="max-w-md mx-auto py-12 text-center px-4">
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Scheduling System</h1>
             <p className="text-gray-600 text-sm mb-6">
-                Set availability slots, generate booking links, and take conflict-free appointments.
+                Set availability slots, generate booking links, and book your appointments.
             </p>
 
             <div className="flex justify-center gap-3">

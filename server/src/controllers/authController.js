@@ -19,7 +19,7 @@ export const loginController = async (req, res) => {
 
         const hashedPassword = user.password;
         if (!hashedPassword) {
-            return res.status(401).json({ error: "Password not found, contact administrator" });
+            return res.status(401).json({ error: "Unexpected Error related to your credentials, contact administrator" });
         }
 
         const isMatch = await bcrypt.compare(password, hashedPassword);
@@ -27,7 +27,11 @@ export const loginController = async (req, res) => {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        // generateToken returns the token string directly
+        if (!user.userId) {
+            user.userId = `USR-${Math.floor(100000 + Math.random() * 900000)}`;
+            await user.save();
+        }
+
         const accessToken = generateToken(user);
 
         res.cookie("accessToken", accessToken, {
@@ -40,6 +44,12 @@ export const loginController = async (req, res) => {
         res.json({
             success: true,
             token: accessToken,
+            user: {
+                id: user._id,
+                userId: user.userId,
+                name: user.name,
+                email: user.email
+            }
         });
     } catch (error) {
         console.error("Login error:", error);
@@ -64,7 +74,10 @@ export const registerController = async (req, res) => {
         const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        const userId = `USR-${Math.floor(100000 + Math.random() * 900000)}`;
+
         const user = new User({
+            userId,
             name,
             email,
             password: hashedPassword
@@ -72,7 +85,6 @@ export const registerController = async (req, res) => {
 
         await user.save();
 
-        // generateToken returns the token string directly
         const accessToken = generateToken(user);
 
         res.cookie("accessToken", accessToken, {
@@ -85,6 +97,12 @@ export const registerController = async (req, res) => {
         res.json({
             success: true,
             token: accessToken,
+            user: {
+                id: user._id,
+                userId: user.userId,
+                name: user.name,
+                email: user.email
+            }
         });
     } catch (error) {
         console.error("Signup error:", error);

@@ -4,7 +4,8 @@ import availabilityServices from '../api/availabilityServices'
 
 const Availability = () => {
     const isLoggedIn = !!localStorage.getItem('token')
-    const defaultHostId = 101
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
+    const hostId = user.userId || user.id
 
     const [date, setDate] = useState('')
     const [startTime, setStartTime] = useState('09:00')
@@ -26,6 +27,11 @@ const Availability = () => {
             return
         }
 
+        if (!hostId) {
+            setError('User ID not found. Please log in again.')
+            return
+        }
+
         if (!date || !startTime || !endTime) {
             setError('All fields are required')
             return
@@ -40,7 +46,7 @@ const Availability = () => {
         setSuccess('')
 
         try {
-            const payload = { Host: defaultHostId, Date: date, StartTime: startTime, EndTime: endTime }
+            const payload = { Host: hostId, Date: date, StartTime: startTime, EndTime: endTime }
             const res = await availabilityServices.createSlot(payload)
 
             if (res.data?.slot) {
@@ -61,12 +67,17 @@ const Availability = () => {
             return
         }
 
+        if (!hostId) {
+            setError('User ID not found. Please log in again.')
+            return
+        }
+
         setLinkLoading(true)
         setError('')
         setCopied(false)
 
         try {
-            const res = await availabilityServices.generateLink({ host: defaultHostId })
+            const res = await availabilityServices.generateLink({ host: hostId })
             if (res.data?.token) {
                 setBookingLink(`${window.location.origin}/book/${res.data.token}`)
             }
